@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import ProLayout, {
-  PageHeaderWrapper,
+  PageContainer,
   SettingDrawer,
+  // eslint-disable-next-line import/no-unresolved
 } from '@ant-design/pro-layout';
 import defaultProps from './defaultProps';
 
@@ -9,7 +10,7 @@ export default () => {
   const [settings, setSetting] = useState({});
   return (
     <div
-      id="test"
+      id="test-pro-layout"
       style={{
         transform: 'rotate(0)',
         overflowX: 'hidden',
@@ -23,9 +24,10 @@ export default () => {
         location={{
           pathname: '/welcome',
         }}
+        rightContentRender={() => 'dom'}
         {...settings}
       >
-        <PageHeaderWrapper content="欢迎使用">
+        <PageContainer content="欢迎使用">
           <div
             style={{
               height: '120vh',
@@ -33,10 +35,10 @@ export default () => {
           >
             Hello World
           </div>
-        </PageHeaderWrapper>
+        </PageContainer>
       </ProLayout>
       <SettingDrawer
-        getContainer={() => document.getElementById('test')}
+        getContainer={() => document.getElementById('test-pro-layout')}
         settings={settings}
         onSettingChange={setSetting}
       />

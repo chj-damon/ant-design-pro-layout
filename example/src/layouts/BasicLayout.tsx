@@ -7,17 +7,15 @@
 import ProLayout, {
   MenuDataItem,
   BasicLayoutProps as ProLayoutProps,
-  Settings,
   SettingDrawer,
-  DefaultFooter,
 } from '../../../src/';
-import React, { useState } from 'react';
-import { Icon } from 'antd';
+import { Select } from 'antd';
+import React from 'react';
+import { HeartTwoTone } from '@ant-design/icons';
 import defaultSettings from '../../config/defaultSettings';
-
-import Link from 'umi/link';
-import history from 'umi/router';
-import logo from '../assets/logo.svg';
+import Footer from '@/components/Footer';
+import { Link, history, useIntl, useModel } from 'umi';
+import RightContent from '@/components/RightContent';
 
 export interface BasicLayoutProps extends ProLayoutProps {
   breadcrumbNameMap: {
@@ -30,33 +28,21 @@ export type BasicLayoutContext = { [K in 'location']: BasicLayoutProps[K] } & {
   };
 };
 
-const BasicLayout: React.FC<BasicLayoutProps> = props => {
-  const [collapsed, handleMenuCollapse] = useState<boolean>(false);
-  const [settings, setSettings] = useState<Partial<Settings>>({
-    ...defaultSettings,
-    fixSiderbar: true,
-    fixedHeader: true,
-  });
+const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
+  const { initialState, setInitialState } = useModel('@@initialState');
+  const { settings = defaultSettings } = initialState || {};
+  const intl = useIntl();
   return (
     <>
       <ProLayout
-        // menuHeaderRender={false}
-        logo={logo}
-        // siderWidth={200}
-        menuHeaderRender={(logoDom, titleDom) => (
-          <Link to="/">
-            {logoDom}
-            {titleDom}
-          </Link>
-        )}
-        breakpoint={false}
+        logo="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
         links={[
-          <>
-            <Icon type="heart" theme="twoTone" twoToneColor="red" />
+          <Link to="/admin/sub-page">
+            <HeartTwoTone />
             <span>name</span>
-          </>,
+          </Link>,
         ]}
-        onCollapse={handleMenuCollapse}
+        formatMessage={intl.formatMessage}
         menuItemRender={(menuItemProps, defaultDom) =>
           menuItemProps.isUrl ? (
             defaultDom
@@ -66,20 +52,38 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
             </Link>
           )
         }
-        collapsed={collapsed}
+        rightContentRender={() => <RightContent />}
         onMenuHeaderClick={() => history.push('/')}
-        footerRender={() => <DefaultFooter />}
+        footerRender={() => <Footer />}
+        menuExtraRender={({ collapsed }) =>
+          !collapsed &&
+          props.location?.pathname === '/welcome' && (
+            <Select defaultValue="product" size="small" style={{ width: '100%' }}>
+              <Select.Option value="product">Product</Select.Option>
+              <Select.Option value="dev">Development</Select.Option>
+              <Select.Option value="disabled" disabled>
+                Preview
+              </Select.Option>
+              <Select.Option value="test">Test</Select.Option>
+            </Select>
+          )
+        }
         {...props}
         {...settings}
+        menu={{
+          defaultOpenAll: true,
+        }}
       >
         {props.children}
       </ProLayout>
       <SettingDrawer
-        // hideLoading
-        // hideCopyButton
-        // hideHintAlert
         settings={settings}
-        onSettingChange={config => setSettings(config)}
+        onSettingChange={(config) =>
+          setInitialState({
+            ...initialState,
+            settings: config,
+          })
+        }
       />
     </>
   );

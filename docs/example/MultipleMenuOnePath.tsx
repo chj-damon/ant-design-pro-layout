@@ -1,5 +1,6 @@
 import React from 'react';
-import ProLayout, { PageHeaderWrapper } from '@ant-design/pro-layout';
+// eslint-disable-next-line import/no-unresolved
+import ProLayout, { PageContainer } from '@ant-design/pro-layout';
 
 export default () => (
   <div
@@ -17,7 +18,6 @@ export default () => (
           {
             path: '/config',
             name: '配置中心',
-            icon: 'gold',
             routes: [
               {
                 path: 'product',
@@ -105,7 +105,6 @@ export default () => (
           {
             path: 'asset',
             name: '资产',
-            icon: 'inbox',
             routes: [
               {
                 path: 'query',
@@ -122,7 +121,6 @@ export default () => (
           {
             path: 'bill',
             name: '账单',
-            icon: 'snippets',
             routes: [
               {
                 path: 'billNo',
@@ -144,7 +142,6 @@ export default () => (
           {
             path: 'cif',
             name: 'CIF',
-            icon: 'team',
             routes: [
               {
                 path: 'bankAccount',
@@ -183,7 +180,6 @@ export default () => (
           {
             path: 'tools',
             name: '小工具',
-            icon: 'tool',
             routes: [
               {
                 path: 'ttsql',
@@ -195,9 +191,9 @@ export default () => (
         ],
       }}
     >
-      <PageHeaderWrapper content="欢迎使用">
+      <PageContainer content="欢迎使用">
         <div>Hello World</div>
-      </PageHeaderWrapper>
+      </PageContainer>
     </ProLayout>
   </div>
 );

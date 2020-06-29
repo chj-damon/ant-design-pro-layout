@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Drawer } from 'antd';
 import classNames from 'classnames';
-import useJsonComparison from 'use-json-comparison';
 import Omit from 'omit.js';
+import { getFlatMenus } from '@umijs/route-utils';
+
+import { useDeepCompareEffect } from '../utils/utils';
 import SiderMenu, { SiderMenuProps } from './SiderMenu';
-import { getFlatMenus } from './SiderMenuUtils';
 import MenuCounter from './Counter';
 
-const SiderMenuWrapper: React.FC<SiderMenuProps> = props => {
+const SiderMenuWrapper: React.FC<SiderMenuProps> = (props) => {
   const {
     isMobile,
     menuData,
@@ -17,23 +18,31 @@ const SiderMenuWrapper: React.FC<SiderMenuProps> = props => {
     style,
     className,
     hide,
+    prefixCls,
   } = props;
-  const { setFlatMenus, setFlatMenuKeys } = MenuCounter.useContainer();
+  const { setFlatMenuKeys } = MenuCounter.useContainer();
 
-  useJsonComparison(() => {
+  useDeepCompareEffect(() => {
     if (!menuData || menuData.length < 1) {
       return () => null;
     }
-    // 当 menu data 改变的时候重新计算这两个参数
+    // // 当 menu data 改变的时候重新计算这两个参数
     const newFlatMenus = getFlatMenus(menuData);
     const animationFrameId = requestAnimationFrame(() => {
-      setFlatMenus(newFlatMenus);
       setFlatMenuKeys(Object.keys(newFlatMenus));
     });
     return () =>
       window.cancelAnimationFrame &&
       window.cancelAnimationFrame(animationFrameId);
-  }, menuData);
+  }, [menuData]);
+
+  useEffect(() => {
+    if (isMobile === true) {
+      if (onCollapse) {
+        onCollapse(true);
+      }
+    }
+  }, [isMobile]);
 
   const omitProps = Omit(props, ['className', 'style']);
 
@@ -44,7 +53,7 @@ const SiderMenuWrapper: React.FC<SiderMenuProps> = props => {
     <Drawer
       visible={!collapsed}
       placement="left"
-      className={classNames('ant-pro-drawer-sider-menu', className)}
+      className={classNames(`${prefixCls}-drawer-sider`, className)}
       onClose={() => onCollapse && onCollapse(true)}
       style={{
         padding: 0,
@@ -56,13 +65,13 @@ const SiderMenuWrapper: React.FC<SiderMenuProps> = props => {
     >
       <SiderMenu
         {...omitProps}
-        className={classNames('ant-pro-sider-menu', className)}
+        className={classNames(`${prefixCls}-sider`, className)}
         collapsed={isMobile ? false : collapsed}
       />
     </Drawer>
   ) : (
     <SiderMenu
-      className={classNames('ant-pro-sider-menu', className)}
+      className={classNames(`${prefixCls}-sider`, className)}
       {...omitProps}
       style={style}
     />

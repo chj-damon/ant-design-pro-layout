@@ -1,17 +1,33 @@
 ---
 title: menu 的相关能力
 order: 9
+sidemenu: false
+nav:
+  title: 能力展示
+  order: 1
 ---
 
 # menu 的各种操作
 
-Pro-Layout 提供了强大的 menu，但是这样必然会 u 封装很多行为，导致需要一些特殊逻辑的用户感到不满。所以我们提供了很多的 API，期望可以满足绝大部分客户的方式。
+ProLayout 提供了强大的 menu，但是这样必然会封装很多行为，导致需要一些特殊逻辑的用户感到不满。所以我们提供了很多的 API，期望可以满足绝大部分客户的方式。
 
 ## 从服务器加载 menu
 
 从服务器加载 menu 主要使用的 API 是 `menuDataRender` 和 `menuRender`,`menuDataRender`可以控制当前的菜单数据，`menuRender`可以控制菜单的 dom 节点。
 
 <code src="./demo/dynamicMenu.tsx" />
+
+## 从服务器加载 menu 并且使用 icon
+
+这里主要是一个演示，我们需要准备一个枚举来进行 icon 的渲染，可以显著的减少打包的大小
+
+<code src="./demo/antd@4MenuIconFormServe.tsx" />
+
+## 从服务器加载 menu 并且使用旧版本 icon
+
+使用兼容包来实现，虽然比较简单，但是会造成打包太大
+
+<code src="./demo/antd@3MenuIconFormServe.tsx" />
 
 ## 自定义 menu 的内容
 

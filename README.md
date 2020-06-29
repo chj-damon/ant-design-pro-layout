@@ -1,6 +1,6 @@
 English | [简体中文](./README.zh-CN.md) [changelog](./changelog.en-US.md)
 
-[![](https://img.shields.io/npm/dw/@ant-design/pro-layout.svg)](https://www.npmjs.com/package/@ant-design/pro-layout) [![npm package](https://img.shields.io/npm/v/@ant-design/pro-layout.svg?style=flat-square?style=flat-square)](https://www.npmjs.com/package/@ant-design/pro-layout) [![](https://img.shields.io/github/issues/ant-design/ant-design-pro-layout.svg)](https://github.com/ant-design/ant-design-pro-layout/issues) [![Dependencies](https://img.shields.io/david/ant-design/ant-design-pro-layout.svg?style=flat-square)](https://david-dm.org/ant-design/ant-design-pro-layout) [![DevDependencies](https://img.shields.io/david/dev/ant-design/ant-design-pro-layout.svg?style=flat-square)](https://david-dm.org/ant-design/ant-design-pro-layout?type=dev) ![](https://github.com/ant-design/ant-design-pro-layout/workflows/.github/workflows/test.yml/badge.svg)
+[![](https://img.shields.io/npm/dw/@ant-design/pro-layout.svg)](https://www.npmjs.com/package/@ant-design/pro-layout) [![npm package](https://img.shields.io/npm/v/@ant-design/pro-layout.svg?style=flat-square?style=flat-square)](https://www.npmjs.com/package/@ant-design/pro-layout) [![](https://img.shields.io/github/issues/ant-design/ant-design-pro-layout.svg)](https://github.com/ant-design/ant-design-pro-layout/issues) [![Dependencies](https://img.shields.io/david/ant-design/ant-design-pro-layout.svg?style=flat-square)](https://david-dm.org/ant-design/ant-design-pro-layout) [![DevDependencies](https://img.shields.io/david/dev/ant-design/ant-design-pro-layout.svg?style=flat-square)](https://david-dm.org/ant-design/ant-design-pro-layout?type=dev) ![Test CI](https://github.com/ant-design/ant-design-pro-layout/workflows/Test%20CI/badge.svg) ![Deploy CI](https://github.com/ant-design/ant-design-pro-layout/workflows/Deploy%20CI/badge.svg)
 
 <h1 align="center">Ant Design Pro Layout</h1>
 
@@ -20,7 +20,7 @@ npm i @ant-design/pro-layout --save
 yarn add @ant-design/pro-layout
 ```
 
-```jsx
+```jsx | pure
 import ProLayout from '@ant-design/pro-layout';
 
 render(<ProLayout />, document.getElementById('root'));
@@ -40,15 +40,16 @@ render(<ProLayout />, document.getElementById('root'));
 | --- | --- | --- | --- |
 | title | layout in the upper left corner title | ReactNode | `'Ant Design Pro'` |
 | logo | layout top left logo url | ReactNode \| ()=>ReactNode | - |
+| pure | Interface that doesn't require extra ui | boolean | - |
 | loading | layout loading status | boolean | - |
 | menuHeaderRender | render logo and title | ReactNode \| (logo,title)=>ReactNode | - |
-| onMenuHeaderClick | menu header click event | (e: React.MouseEvent<HTMLDivElement>) => void | - |
+| onMenuHeaderClick | menu header click event | `(e: React.MouseEvent<HTMLDivElement>) => void` | - |
 | contentStyle | layout content style | CSSProperties | - |
 | layout | layout menu mode, sidemenu: right navigation, topmenu: top navigation | 'sidemenu' \| 'topmenu' | `'sidemenu'` |
 | contentWidth | content mode of layout, Fluid: fixed width 1200px, Fixed: adaptive | 'Fluid' \| 'Fixed' | `'Fluid'` |
 | navTheme | Navigation menu theme | 'light' \| 'dark' | `'dark'` |
 | fixedHeader | whether to fix header to top | boolean | `false` |
-| FixSiderbar | Whether to fix navigation menu | boolean | `false` |
+| fixSiderbar | Whether to fix navigation menu | boolean | `false` |
 | breakpoint | [breakpoints](https://ant.design/components/grid/#api) of the responsive layout | `Enum { 'xs', 'sm', 'md', 'lg', 'xl', 'xxl' }` | `lg` |
 | menu | About the configuration of the menu, only locale, locale can turn off the globalization of the menu | { locale: boolean,defaultOpenAll: boolean } | `{ locale: true }` |
 | iconfontUrl | Use [IconFont](https://ant.design/components/icon-cn/#components-icon-demo-iconfont) icon configuration | string | - |
@@ -56,14 +57,19 @@ render(<ProLayout />, document.getElementById('root'));
 | settings | layout settings | [`Settings`](#Settings) | [`Settings`](#Settings) | - |
 | siderWidth | width of sider menu | number | 256 |
 | collapsed | control menu's collapse and expansion | boolean | true |
+| onPageChange | Triggered when page switching | (location: Location) => void | - |
 | onCollapse | folding collapse event of menu | (collapsed: boolean) => void | - |
 | headerRender | custom header render method | (props: BasicLayoutProps) => ReactNode | - |
+| headerTitleRender | custom header title render method | (props: BasicLayoutProps) => ReactNode | - |
+| headerContentRender | custom header content render method | (props: BasicLayoutProps) => ReactNode | - |
 | rightContentRender | header right content render method | (props: HeaderViewProps) => ReactNode | - |
 | collapsedButtonRender | custom collapsed button method | (collapsed: boolean) => ReactNode | - |
 | footerRender | custom footer render method | (props: BasicLayoutProps) => ReactNode | - |
 | pageTitleRender | custom page title render method | (props: BasicLayoutProps) => ReactNode | - |
 | menuRender | custom menu render method | (props: HeaderViewProps) => ReactNode | - |
 | menuDataRender | The render method of menuData, with the definition of menuData | `(menuData: MenuDataItem[]) => MenuDataItem[]` | - |
+| postMenuData | View the menu data before displaying it. Modification will not trigger re-rendering. | `(menuData: MenuDataItem[]) => MenuDataItem[]` | - |
+| postMenuData |
 | menuItemRender | the render method of a custom menu item | [(itemProps: MenuDataItem) => ReactNode](#MenuDataItem) | - |
 | subMenuItemRender | the render method of a custom subMenu item | [(itemProps: MenuDataItem) => ReactNode](#MenuDataItem) | - |
 | breadcrumbRender | custom breadcrumbs data | (route)=>route | - |
@@ -76,7 +82,7 @@ Layout support for most of [Menu](https://ant.design/components/menu-cn/#Menu) b
 
 ### SettingDrawer
 
-```js
+```js | pure
 import { SettingDrawer } from '@ant-design/pro-layout';
 ```
 
@@ -88,9 +94,9 @@ import { SettingDrawer } from '@ant-design/pro-layout';
 | onSettingChange | The setting changes event | (settings: [Settings](#Settings)) => void | - |
 | hideHintAlert | remove hint info | boolean | - |
 
-### PageHeaderWrapper
+### PageContainer
 
-PageHeaderWrapper encapsulates the PageHeader component of ant design, adds tabList, and content. Fill in the title and breadcrumb based on the current route. It depends on the route property of the Layout. Of course you can pass in parameters to override the default values. PageHeaderWrapper supports all the attributes of [Tabs](https://ant.design/components/tabs-cn/) and [PageHeader](https://ant.design/components/page-header-cn/).
+PageContainer encapsulates the PageHeader component of ant design, adds tabList, and content. Fill in the title and breadcrumb based on the current route. It depends on the route property of the Layout. Of course you can pass in parameters to override the default values. PageContainer supports all the attributes of [Tabs](https://ant.design/components/tabs-cn/) and [PageHeader](https://ant.design/components/page-header-cn/).
 
 | Property | Description | Type | Default Value |
 | --- | --- | --- | --- |
@@ -113,12 +119,12 @@ a simple loading page
 
 RouteContext can provide built-in data for Layout. For example, isMobile and collapsed, you can consume this data to customize some behavior.
 
-```tsx
+```tsx | pure
 import { RouteContext } from '@ant-design/pro-layout';
 
 const Page = () => (
   <RouteContext.Consumer>
-    {value => {
+    {(value) => {
       return value.title;
     }}
   </RouteContext.Consumer>
@@ -137,7 +143,7 @@ GridContent encapsulates [equal width](https://preview.pro.ant.design/dashboard/
 
 Generate menuData and breadcrumb based on the router information.
 
-```js
+```js | pure
 import { getMenuData } from '@ant-design/pro-layout';
 
 const { breadcrumb, menuData } = getMenuData(
@@ -157,7 +163,7 @@ const { breadcrumb, menuData } = getMenuData(
 
 ### getPageTitle
 
-```js
+```js | pure
 import { getPageTitle } from '@ant-design/pro-layout';
 
 const title = getPageTitle({
@@ -185,7 +191,7 @@ getPageTitle encapsulates the logic based on the title generated on menuData.
 
 ### Settings
 
-```ts
+```ts | pure
 // can be done via import { Settings } from '@ant-design/pro-layout/defaultSettings' to get this type
 
 export interface Settings {
@@ -226,7 +232,7 @@ export interface Settings {
 
 ### MenuDataItem
 
-```ts
+```ts | pure
 // can be imported { MenuDataItem } from '@ant-design/pro-layout/typings' to get this type
 
 export interface MenuDataItem {
@@ -244,7 +250,7 @@ export interface MenuDataItem {
 
 ### Route
 
-```ts
+```ts | pure
 // can be imported { RouterTypes } from '@ant-design/pro-layout/typings'  to get this type
 export interface Route {
   path: string;
@@ -258,14 +264,6 @@ export interface Route {
   }>;
 }
 ```
-
-## Browsers support
-
-Modern browsers and IE11.
-
-| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Opera |
-| --- | --- | --- | --- | --- |
-| IE11, Edge | last 2 versions | last 2 versions | last 2 versions | last 2 versions |
 
 ## Contributing
 

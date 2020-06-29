@@ -1,6 +1,6 @@
 import pathToRegexp from 'path-to-regexp';
 import { MenuDataItem } from './typings';
-import { Settings } from './defaultSettings';
+import { ProSettings } from './defaultSettings';
 
 export const matchParamsPath = (
   pathname: string,
@@ -39,8 +39,8 @@ export interface GetPageTitleProps {
   pathname?: string;
   breadcrumb?: { [path: string]: MenuDataItem };
   breadcrumbMap?: Map<string, MenuDataItem>;
-  menu?: Settings['menu'];
-  title?: Settings['title'];
+  menu?: ProSettings['menu'];
+  title?: ProSettings['title'];
   pageName?: string;
   formatMessage?: (data: { id: any; defaultMessage?: string }) => string;
 }

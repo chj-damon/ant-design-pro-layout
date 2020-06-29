@@ -11,13 +11,55 @@ import './index.less';
 import BaseMenu from '../SiderMenu/BaseMenu';
 import { HeaderViewProps } from '../Header';
 
-export interface TopNavHeaderProps extends SiderMenuProps {
+export type TopNavHeaderProps = SiderMenuProps & {
   logo?: React.ReactNode;
   onCollapse?: (collapse: boolean) => void;
   rightContentRender?: HeaderViewProps['rightContentRender'];
-}
+};
 
-const TopNavHeader: React.FC<TopNavHeaderProps> = props => {
+/**
+ * 抽离出来是为了防止 rightSize 经常改变导致菜单 render
+ * @param param0
+ */
+const RightContent: React.FC<TopNavHeaderProps> = ({
+  rightContentRender,
+  ...props
+}) => {
+  const [rightSize, setRightSize] = useState<number | string>('auto');
+
+  return (
+    <div
+      style={{
+        minWidth: rightSize,
+      }}
+    >
+      <div
+        style={{
+          paddingRight: 8,
+        }}
+      >
+        <ResizeObserver
+          onResize={({ width }: { width: number }) => {
+            if (!width) {
+              return;
+            }
+            setRightSize(width);
+          }}
+        >
+          {rightContentRender && (
+            <div>
+              {rightContentRender({
+                ...props,
+              })}
+            </div>
+          )}
+        </ResizeObserver>
+      </div>
+    </div>
+  );
+};
+
+const TopNavHeader: React.FC<TopNavHeaderProps> = (props) => {
   const ref = useRef(null);
   const {
     theme,
@@ -26,14 +68,17 @@ const TopNavHeader: React.FC<TopNavHeaderProps> = props => {
     rightContentRender,
     className: propsClassName,
     style,
+    layout,
   } = props;
   const baseClassName = 'ant-pro-top-nav-header';
-  const headerDom = defaultRenderLogoAndTitle(props);
+  const headerDom = defaultRenderLogoAndTitle(
+    { ...props, collapsed: false },
+    layout === 'mix' ? 'headerTitleRender' : undefined,
+  );
 
   const className = classNames(baseClassName, propsClassName, {
     light: theme === 'light',
   });
-  const [rightSize, setRightSize] = useState<number | string>('auto');
   return (
     <div className={className} style={style}>
       <div
@@ -49,37 +94,11 @@ const TopNavHeader: React.FC<TopNavHeaderProps> = props => {
             </div>
           </div>
         )}
-        <div
-          style={{ flex: 1, overflow: 'hidden' }}
-          className={`${baseClassName}-menu`}
-        >
+        <div style={{ flex: 1 }} className={`${baseClassName}-menu`}>
           <BaseMenu {...props} {...props.menuProps} />
         </div>
         {rightContentRender && (
-          <div
-            style={{
-              minWidth: rightSize,
-            }}
-          >
-            <ResizeObserver
-              onResize={({ width }) => {
-                if (!width) {
-                  return;
-                }
-                setRightSize(width);
-              }}
-            >
-              <div
-                style={{
-                  paddingRight: 8,
-                }}
-              >
-                {rightContentRender({
-                  ...props,
-                })}
-              </div>
-            </ResizeObserver>
-          </div>
+          <RightContent rightContentRender={rightContentRender} {...props} />
         )}
       </div>
     </div>

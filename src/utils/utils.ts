@@ -19,7 +19,7 @@ export const isBrowser = () =>
   !isNode;
 
 export function guid() {
-  return 'xxxxxxxx'.replace(/[xy]/g, c => {
+  return 'xxxxxxxx'.replace(/[xy]/g, (c) => {
     // eslint-disable-next-line no-bitwise
     const r = (Math.random() * 16) | 0;
     // eslint-disable-next-line no-bitwise
@@ -39,10 +39,7 @@ export const getKeyByPath = (item: MenuDataItem) => {
   }
   // 如果还是没有，用对象的hash 生成一个
   try {
-    return hash
-      .sha256()
-      .update(stringify(item))
-      .digest('hex');
+    return hash.sha256().update(stringify(item)).digest('hex');
   } catch (error) {
     // dom some thing
   }
@@ -102,8 +99,27 @@ const themeConfig = {
   '#722ED1': 'purple',
 };
 
+const invertKeyValues = (obj: Object) =>
+  Object.keys(obj).reduce((acc, key) => {
+    acc[obj[key]] = key;
+    return acc;
+  }, {});
+
+/**
+ * #1890ff -> daybreak
+ * @param val
+ */
 export function genThemeToString(val?: string): string {
-  return val ? themeConfig[val] : undefined;
+  return val && themeConfig[val] ? themeConfig[val] : val;
+}
+
+/**
+ * daybreak-> #1890ff
+ * @param val
+ */
+export function genStringToTheme(val?: string): string {
+  const stringConfig = invertKeyValues(themeConfig);
+  return val && stringConfig[val] ? stringConfig[val] : val;
 }
 
 export const usePrevious = <T>(state: T): T | undefined => {
@@ -115,3 +131,53 @@ export const usePrevious = <T>(state: T): T | undefined => {
 
   return ref.current;
 };
+
+export function debounce(func: Function, wait: number, immediate?: boolean) {
+  // immediate默认为false
+  let timeout: number | null;
+  let args: IArguments | null;
+  let context: null;
+  let timestamp: number;
+  let result: any;
+
+  let debounceFunction: any;
+
+  // eslint-disable-next-line no-var
+  var later = function later() {
+    const last = Date.now() - timestamp;
+
+    if (last < wait && last >= 0) {
+      timeout = window.setTimeout(later, wait - last);
+      debounceFunction.id = timeout;
+    } else {
+      timeout = null;
+      if (!immediate) {
+        result = func.apply(context, args as any);
+        // eslint-disable-next-line no-multi-assign
+        if (!timeout) context = args = null;
+      }
+    }
+  };
+
+  // eslint-disable-next-line func-names
+  debounceFunction = function () {
+    // @ts-ignore
+    context = this;
+    // eslint-disable-next-line prefer-rest-params
+    args = arguments;
+    timestamp = Date.now();
+    const callNow = immediate && !timeout;
+    if (!timeout) {
+      timeout = window.setTimeout(later, wait);
+      debounceFunction.id = timeout;
+    }
+    if (callNow) {
+      result = func.apply(context, args);
+      // eslint-disable-next-line no-multi-assign
+      context = args = null;
+    }
+
+    return result;
+  };
+  return debounceFunction;
+}

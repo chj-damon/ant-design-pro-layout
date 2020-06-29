@@ -1,5 +1,60 @@
 # changelog
 
+### 5.0.5
+
+- 💄 Fix the problem that the name is too long and cause a newline when `topMenu`. [9ad2016](https://github.com/ant-design/ant-design-pro-layout/commit/9ad2016)
+- 🐛 Fix the problem of similar path matching errors. [ed74c4b](https://github.com/ant-design/ant-design-pro-layout/commit/ed74c4b)
+- 🐛 Fix the issue that `contentStyle` does not take effect. [f87e24c](https://github.com/ant-design/ant-design-pro-layout/commit/f87e24c)
+- 💥 Added `postMenuData` props. [cace4c1](https://github.com/ant-design/ant-design-pro-layout/commit/cace4c1)
+- 💥 Added `onPageChange` props. [#346](https://github.com/ant-design/ant-design-pro-layout/pull/346)
+
+### 5.0.4
+
+- 🐞 The problem of monitoring failure when the menu icon is changed to dom. [901220f](https://github.com/ant-design/ant-design-pro-layout/commit/901220f)
+
+### 5.0.3
+
+- 🐞 Fix the problem of height calculation error. [d3edafb](https://github.com/ant-design/ant-design-pro-layout/commit/d3edafb)
+
+### 5.0.2
+
+- 🐞 Fix the problem that children change the page not refreshing. [e2b46dd](https://github.com/ant-design/ant-design-pro-layout/commit/e2b46dd)
+
+### 5.0.1
+
+- 🌟 Optimize performance to reduce the number of renders. [23b824c](https://github.com/ant-design/ant-design-pro-layout/commit/23b824c)
+
+### 5.0.0
+
+- 🔥🔥🔥 antd@4 is supported. In order to cope with the changes of icons, it needs to be used with `umi-plugin-antd-icon-config` to realize the function of the configuration menu in config. [#294](https://github.com/ant-design/ant-design-pro-layout/pull/294)
+
+### 4.10.10
+
+- 🌟 The default color values have been enumerated and can now be copied directly. [87e81c5](https://github.com/ant-design/ant-design-pro-layout/commit/87e81c5)
+- 🌟 Added icon expiration warning. q[6642e43](https://github.com/ant-design/ant-design-pro-layout/commit/6642e43)
+
+### 4.10.9
+
+- 🌟 umd version provided. [ecb95fa](https://github.com/ant-design/ant-design-pro-layout/commit/ecb95fa)
+
+### 4.10.8
+
+- 🌟 when `isMobile` set Drawer `visible = false`. [fb5cdd47](https://github.com/ant-design/ant-design-pro-layout/commit/fb5cdd47)
+- 🌟 export `PageContainerProps` interface. [#291](https://github.com/ant-design/ant-design-pro-layout/pull/291)
+- 🐞 Layout `style` prefer user configuration. [521bf7c5](https://github.com/ant-design/ant-design-pro-layout/commit/521bf7c5)
+
+### 4.10.7
+
+- 🐞 Fixed the issue that keys calculation would not be triggered during reload. [a8f770f](https://github.com/ant-design/ant-design-pro-layout/commit/a8f770f)
+
+### 4.10.6
+
+- 🐞 `getPopupContainer` not in the default configuration menu. [e6c6971](https://github.com/ant-design/ant-design-pro-layout/commit/e6c6971)
+
+### 4.10.5
+
+- 🐞 unlock use-json-comparison.
+
 ### 4.10.4
 
 - 🌟 `menuProps` supports overriding any attributes. [c039b4a1](https://github.com/ant-design/ant-design-pro-layout/commit/c039b4a1)
@@ -46,7 +101,7 @@
 ### 4.9.8
 
 - 🐞 Add default height and width. [8064423d](https://github.com/ant-design/ant-design-pro-layout/commit/8064423d)
-- 🌟 Add `tabAnimated` props for PageHeaderWrapper. [#224](https://github.com/ant-design/ant-design-pro-layout/pull/224)
+- 🌟 Add `tabAnimated` props for PageContainer. [#224](https://github.com/ant-design/ant-design-pro-layout/pull/224)
 - 🌟 Links menu support inlineCollapsed. [90003255](https://github.com/ant-design/ant-design-pro-layout/commit/90003255)
 - 🌟 `pageTitleRender` add add `info` props. [fbc86888](https://github.com/ant-design/ant-design-pro-layout/commit/fbc86888)
 - 🌟 Use ResizeObserver support fold menu. [69b41b0e](https://github.com/ant-design/ant-design-pro-layout/commit/69b41b0e)
@@ -120,7 +175,7 @@
 - 💄 Modify Header component `zIndex` to 9. [#167](https://github.com/ant-design/ant-design-pro-layout/pull/167)
 - 🌟 DefaultFooter `copyright` support false. [#181](https://github.com/ant-design/ant-design-pro-layout/pull/181)
 - 🐞 Fix two renders of Layout. [#172](https://github.com/ant-design/ant-design-pro-layout/pull/172)
-- 🐞 Fix PageHeaderWrapper don't render breadcrumb. [#179](https://github.com/ant-design/ant-design-pro-layout/pull/179)
+- 🐞 Fix PageContainer don't render breadcrumb. [#179](https://github.com/ant-design/ant-design-pro-layout/pull/179)
 - 🐞 Fix submenu don't work for `menuItemRender`. [#180](https://github.com/ant-design/ant-design-pro-layout/pull/180)
 - 🌟 PageTitleRender has defaultPageTitle. [63c0a56c](https://github.com/ant-design/ant-design-pro-layout/commit/63c0a56c077815693cbbcd606b937dbe3270ed06)
 - 🌟 All component support style and className. [#169](https://github.com/ant-design/ant-design-pro-layout/pull/169)
@@ -143,7 +198,7 @@ Layout now does not render the footer by default, you need to [set](https://gith
 
 - 🌟 Add onTitleClick for subMenu. [#139](https://github.com/ant-design/ant-design-pro-layout/issues/139)
 - 🌟 Footer support links = false. [2ac24296](https://github.com/ant-design/ant-design-pro-layout/commit/2ac242962e681cc5a2d01153a1565c578dc42ae8)
-- 🌟 PageHeaderWrapper support all tabpanel props. [478c5a1d](https://github.com/ant-design/ant-design-pro-layout/commit/478c5a1dec631ec2247399e1ceee657361786bd3)
+- 🌟 PageContainer support all tabpanel props. [478c5a1d](https://github.com/ant-design/ant-design-pro-layout/commit/478c5a1dec631ec2247399e1ceee657361786bd3)
 
 ### 4.5.15
 
@@ -201,7 +256,7 @@ Layout now does not render the footer by default, you need to [set](https://gith
 
 ### 4.5.4
 
-- 🐞 Fixed PageHeaderWrapper type error.
+- 🐞 Fixed PageContainer type error.
 
 ### 4.5.3
 
@@ -214,7 +269,7 @@ Layout now does not render the footer by default, you need to [set](https://gith
 
 ### 4.5.1
 
-- 🌟 PageHeaderWrapper supports content customization through pageHeaderRender.
+- 🌟 PageContainer supports content customization through pageHeaderRender.
 
 ### 4.5.0
 

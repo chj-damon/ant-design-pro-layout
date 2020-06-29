@@ -1,5 +1,60 @@
 # 更新日志
 
+### 5.0.5
+
+- 💄 修复 `topMenu` 的时候，名字太长导致换行的问题。[9ad2016](https://github.com/ant-design/ant-design-pro-layout/commit/9ad2016)
+- 🐛 修复相似路径匹配出错的问题。[ed74c4b](https://github.com/ant-design/ant-design-pro-layout/commit/ed74c4b)
+- 🐛 修复 `contentStyle` 不生效的问题。[f87e24c](https://github.com/ant-design/ant-design-pro-layout/commit/f87e24c)
+- 💥 增加 `postMenuData` props。[cace4c1](https://github.com/ant-design/ant-design-pro-layout/commit/cace4c1)
+- 💥 增加 `onPageChange` props。[#346](https://github.com/ant-design/ant-design-pro-layout/pull/346)
+
+### 5.0.4
+
+- 🐞 修改 menu 的 icon 为 dom 时监听失效的问题。[901220f](https://github.com/ant-design/ant-design-pro-layout/commit/901220f)
+
+### 5.0.3
+
+- 🐞 修复高度计算错误的问题。[d3edafb](https://github.com/ant-design/ant-design-pro-layout/commit/d3edafb)
+
+### 5.0.2
+
+- 🐞 修复 children 改变页面不刷新的问题。[e2b46dd](https://github.com/ant-design/ant-design-pro-layout/commit/e2b46dd)
+
+### 5.0.1
+
+- 🌟 优化性能，减少 render 次数。[23b824c](https://github.com/ant-design/ant-design-pro-layout/commit/23b824c)
+
+### 5.0.0
+
+- 🔥🔥🔥 支持了 antd@4, 为了配合 icons 的改动，需要与 `umi-plugin-antd-icon-config` 配合使用，才能实现 config 中配置菜单的功能。[#294](https://github.com/ant-design/ant-design-pro-layout/pull/294)
+
+### 4.10.10
+
+- 🌟 默认色值进行了枚举，现在可以直接复制。[87e81c5](https://github.com/ant-design/ant-design-pro-layout/commit/87e81c5)
+- 🌟 增加 icon 的过期警告。[6642e43](https://github.com/ant-design/ant-design-pro-layout/commit/6642e43)
+
+### 4.10.9
+
+- 🌟 提供了 umd 版本的包。[ecb95fa](https://github.com/ant-design/ant-design-pro-layout/commit/ecb95fa)
+
+### 4.10.8
+
+- 🌟 当 `isMobile` 改成的时候设置 Drawer 的 `visible` 为 `false`。[fb5cdd47](https://github.com/ant-design/ant-design-pro-layout/commit/fb5cdd47)
+- 🌟 导出 `PageContainerProps` 定义。 [#291](https://github.com/ant-design/ant-design-pro-layout/pull/291)
+- 🐞 Layout `style` 优先使用用户的配置。 [521bf7c5](https://github.com/ant-design/ant-design-pro-layout/commit/521bf7c5)
+
+### 4.10.7
+
+- 🐞 修复在 chrome reload 不触发 keys 计算的问题。 [a8f770f](https://github.com/ant-design/ant-design-pro-layout/commit/a8f770f)
+
+### 4.10.6
+
+- 🐞 不在默认配置 menu 的 `getPopupContainer。`[e6c6971](https://github.com/ant-design/ant-design-pro-layout/commit/e6c6971)
+
+### 4.10.5
+
+- 🐞 不锁 use-json-comparison 的版本。
+
 ### 4.10.4
 
 - 🌟 `menuProps` 支持覆盖任何属性。[c039b4a1](https://github.com/ant-design/ant-design-pro-layout/commit/c039b4a1)
@@ -46,7 +101,7 @@
 ### 4.9.8
 
 - 🐞 添加默认的高度和宽度。[8064423d](https://github.com/ant-design/ant-design-pro-layout/commit/8064423d)
-- 🌟 为 PageHeaderWrapper 添加 `tabAnimated` 属性。[#224](https://github.com/ant-design/ant-design-pro-layout/pull/224)
+- 🌟 为 PageContainer 添加 `tabAnimated` 属性。[#224](https://github.com/ant-design/ant-design-pro-layout/pull/224)
 - 🌟 链接菜单支持 `inlineCollapsed`。[90003255](https://github.com/ant-design/ant-design-pro-layout/commit/90003255)
 - 🌟 `pageTitleRender`添加增加`info`的参数。[fbc86888](https://github.com/ant-design/ant-design-pro-layout/commit/fbc86888)
 - 🌟 使用 ResizeObserver 支持折叠菜单。[69b41b0e](https://github.com/ant-design/ant-design-pro-layout/commit/69b41b0e)
@@ -123,7 +178,7 @@
 - 💄 修改 Header 的 `zIndex` 为 9。[#167](https://github.com/ant-design/ant-design-pro-layout/pull/167)
 - 🌟 DefaultFooter `copyright` 支持值为 false。 [#181](https://github.com/ant-design/ant-design-pro-layout/pull/181)
 - 🐞 修复 Layout 渲染两次的问题。[#172](https://github.com/ant-design/ant-design-pro-layout/pull/172)
-- 🐞 修复 PageHeaderWrapper 不渲染面包屑的问题。 [#179](https://github.com/ant-design/ant-design-pro-layout/pull/179)
+- 🐞 修复 PageContainer 不渲染面包屑的问题。 [#179](https://github.com/ant-design/ant-design-pro-layout/pull/179)
 - 🐞 修复 submenu 不支持 menuItemRender 的问题。 [#180](https://github.com/ant-design/ant-design-pro-layout/pull/180)
 - 🌟 Layout 的 pageTitleRender 现在包含了默认的 title。 [63c0a56c](https://github.com/ant-design/ant-design-pro-layout/commit/63c0a56c077815693cbbcd606b937dbe3270ed06)
 - 🌟 所有的组件都支持了 `style` 和 `className`。[#169](https://github.com/ant-design/ant-design-pro-layout/pull/169)
@@ -146,7 +201,7 @@ Layout 现在默认不会渲染页脚，需要自己[设置](https://github.com/
 
 - 🌟 SubMenu 支持 onTitleClick 属性。 [#139](https://github.com/ant-design/ant-design-pro-layout/pull/139)
 - 🌟 Footer 支持 `links` 设置为 false。[2ac24296](https://github.com/ant-design/ant-design-pro-layout/commit/2ac242962e681cc5a2d01153a1565c578dc42ae8)
-- 🌟 PageHeaderWrapper 支持 [TabsTabPane](https://ant.design/components/tabs-cn/#TabsTabPane) 的所有属性。[478c5a1d](https://github.com/ant-design/ant-design-pro-layout/commit/478c5a1dec631ec2247399e1ceee657361786bd3)
+- 🌟 PageContainer 支持 [TabsTabPane](https://ant.design/components/tabs-cn/#TabsTabPane) 的所有属性。[478c5a1d](https://github.com/ant-design/ant-design-pro-layout/commit/478c5a1dec631ec2247399e1ceee657361786bd3)
 
 ### 4.5.15
 
@@ -204,7 +259,7 @@ Layout 现在默认不会渲染页脚，需要自己[设置](https://github.com/
 
 ### 4.5.4
 
-- 🐞 修复 PageHeaderWrapper 的类型错误。
+- 🐞 修复 PageContainer 的类型错误。
 
 ### 4.5.3
 
@@ -217,7 +272,7 @@ Layout 现在默认不会渲染页脚，需要自己[设置](https://github.com/
 
 ### 4.5.1
 
-- 🌟 PageHeaderWrapper 支持通过 pageHeaderRender 来自定义内容。
+- 🌟 PageContainer 支持通过 pageHeaderRender 来自定义内容。
 
 ### 4.5.0
 

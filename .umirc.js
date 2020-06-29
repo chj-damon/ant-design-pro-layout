@@ -1,8 +1,7 @@
 export default {
-  doc: {
-    title: 'Pro-Layout',
-    logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
-  },
+  title: 'ProLayout',
+  logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
+  mode: 'site',
   extraBabelPlugins: [
     [
       'import',
@@ -13,7 +12,12 @@ export default {
       },
     ],
   ],
+  navs: [
+    null,
+    {
+      title: 'GitHub',
+      path: 'https://github.com/ant-design/ant-design-pro-layout',
+    },
+  ],
   hash: true,
-  plugins: [['umi-plugin-githubpages', {}]],
-  disableCSSModules: true,
 };

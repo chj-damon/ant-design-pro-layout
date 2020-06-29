@@ -1,19 +1,35 @@
 ---
 title: 介绍
 order: 10
+sidemenu: false
+hero:
+  title: ProLayout
+  desc: 🏆 Use Ant Design Table like a Pro!
+  actions:
+    - text: 快速开始 →
+      link: /#usage
+features:
+  - icon: https://gw.alipayobjects.com/os/q/cms/images/k9ziitmp/13668549-b393-42a2-97c3-a6365ba87ac2_w96_h96.png
+    title: 简单易用
+    desc: 开箱即用的 Layout 组件，一步即可生成layout
+  - icon: https://gw.alipayobjects.com/os/q/cms/images/k9ziik0f/487a2685-8f68-4c34-824f-e34c171d0dfd_w96_h96.png
+    title: Ant Design
+    desc: 与 Ant Design 设计体系一脉相承，无缝对接 antd 项目，兼容 antd 3.x & 4.x
+  - icon: https://gw.alipayobjects.com/os/q/cms/images/k9ziip85/89434dcf-5f1d-4362-9ce0-ab8012a85924_w96_h96.png
+    title: 国际化
+    desc: 提供完备的国际化语言支持，与 Ant Design 体系打通
+  - icon: https://gw.alipayobjects.com/mdn/rms_05efff/afts/img/A*-3XMTrwP85wAAAAAAAAAAABkARQnAQ
+    title: 预设样式
+    desc: 样式风格与 antd 一脉相承，无需魔改，浑然天成
+  - icon: https://gw.alipayobjects.com/os/q/cms/images/k9ziieuq/decadf3f-b53a-4c48-83f3-a2faaccf9ff7_w96_h96.png
+    title: 预设行为
+    desc: 路由可以默认的生成菜单和面包屑, 并且自动更新浏览器的 title
+  - icon: https://gw.alipayobjects.com/os/q/cms/images/k9zij2bh/67f75d56-0d62-47d6-a8a5-dbd0cb79a401_w96_h96.png
+    title: Typescript
+    desc: 使用 TypeScript 开发，提供完整的类型定义文件
+
+footer: Open-source MIT Licensed | Copyright © 2017-present
 ---
-
-[![](https://img.shields.io/npm/dw/@ant-design/pro-layout.svg)](https://www.npmjs.com/package/@ant-design/pro-layout) [![npm package](https://img.shields.io/npm/v/@ant-design/pro-layout.svg?style=flat-square?style=flat-square)](https://www.npmjs.com/package/@ant-design/pro-layout) [![](https://img.shields.io/github/issues/ant-design/ant-design-pro-layout.svg)](https://github.com/ant-design/ant-design-pro-layout/issues) [![Dependencies](https://img.shields.io/david/ant-design/ant-design-pro-layout.svg?style=flat-square)](https://david-dm.org/ant-design/ant-design-pro-layout) [![DevDependencies](https://img.shields.io/david/dev/ant-design/ant-design-pro-layout.svg?style=flat-square)](https://david-dm.org/ant-design/ant-design-pro-layout?type=dev) [![Build Status](https://dev.azure.com/chenshuai2144/Pro-Layout/_apis/build/status/ant-design.ant-design-pro-layout?branchName=master)](https://dev.azure.com/chenshuai2144/Pro-Layout/_build/latest?definitionId=2&branchName=master)
-
-<h1 align="center">Ant Design Pro</h1>
-
-<div align="center">
-
-![image](https://gw.alipayobjects.com/zos/antfincdn/raCkHezMns/Kapture%2525202019-11-25%252520at%25252019.15.12.gif)
-
-开箱即用的中台前端/设计解决方案。此仓库是 Ant Design Pro 的 layout, 是为了方便快速的使用 layout 而开发。
-
-</div>
 
 ## 使用
 
@@ -39,6 +55,7 @@ render(<BasicLayout />, document.getElementById('root'));
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
+| pure | 是否删除掉所有的自带界面 | boolean | - |
 | title | layout 的 左上角 的 title | ReactNode | `'Ant Design Pro'` |
 | logo | layout 的 左上角 logo 的 url | ReactNode \| ()=>ReactNode | - |
 | loading | layout 的加载态 | boolean | - |
@@ -46,6 +63,7 @@ render(<BasicLayout />, document.getElementById('root'));
 | onMenuHeaderClick | menu 菜单的头部点击事件 | `(e: React.MouseEvent<HTMLDivElement>) => void` | - |
 | contentStyle | layout 的 内容区 style | CSSProperties | - |
 | layout | layout 的菜单模式,sidemenu：右侧导航，topmenu：顶部导航 | 'sidemenu' \| 'topmenu' | `'sidemenu'` |
+| splitMenus | 是否自动切分 menuData，只有 mix 模式会生效 | boolean | false |
 | contentWidth | layout 的内容模式,Fluid：定宽 1200px，Fixed：自适应 | 'Fluid' \| 'Fixed' | `'Fluid'` |
 | navTheme | 导航的主题 | 'light' \| 'dark' | `'dark'` |
 | fixedHeader | 是否固定 header 到顶部 | boolean | `false` |
@@ -87,9 +105,9 @@ render(<BasicLayout />, document.getElementById('root'));
 | hideLoading | 删除主题切换时的 message 提示 | boolean | - |
 | hideCopyButton | 删除下方的拷贝设置按钮 | boolean | - |
 
-### PageHeaderWrapper
+### PageContainer
 
-PageHeaderWrapper 封装了 ant design 的 PageHeader 组件，增加了 tabList，和 content。 根据当前的路由填入 title 和 breadcrumb。它依赖 Layout 的 route 属性。当然你可以传入参数来复写默认值。 PageHeaderWrapper 支持 [Tabs](https://ant.design/components/tabs-cn/) 和 [PageHeader](https://ant.design/components/page-header-cn/) 的所有属性。
+PageContainer 封装了 ant design 的 PageHeader 组件，增加了 tabList，和 content。 根据当前的路由填入 title 和 breadcrumb。它依赖 Layout 的 route 属性。当然你可以传入参数来复写默认值。 PageContainer 支持 [Tabs](https://ant.design/components/tabs-cn/) 和 [PageHeader](https://ant.design/components/page-header-cn/) 的所有属性。
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
@@ -104,9 +122,9 @@ PageHeaderWrapper 封装了 ant design 的 PageHeader 组件，增加了 tabList
 
 一个简单的加载页面
 
-| 参数 | 说明       | 类型      | 默认值 |
-| ---- | ---------- | --------- | ------ |
-| tip  | 加载的小说 | ReactNode | -      |
+| 参数 | 说明         | 类型      | 默认值 |
+| ---- | ------------ | --------- | ------ |
+| tip  | 加载的小说明 | ReactNode | -      |
 
 ### RouteContext
 
@@ -117,7 +135,7 @@ import { RouteContext } from '@ant-design/pro-layout';
 
 const Page = () => (
   <RouteContext.Consumer>
-    {value => {
+    {(value) => {
       return value.title;
     }}
   </RouteContext.Consumer>
@@ -259,3 +277,27 @@ export interface Route {
   }>;
 }
 ```
+
+# 基本使用
+
+ProLayout 与 umi 配合使用会有最好的效果，umi 会把 config.ts 中的路由帮我们自动注入到配置的 layout 中，这样我们就可以免去手写菜单的烦恼。
+
+ProLayout 扩展了 umi 的 router 配置，新增了 name，icon，locale,hideInMenu,hideChildrenInMenu 等配置，这样可以更方便的生成菜单，在一个地方配置即可。数据格式如下：
+
+```ts | pure
+export interface MenuDataItem {
+  hideChildrenInMenu?: boolean;
+  hideInMenu?: boolean;
+  icon?: string;
+  locale?: string;
+  name?: string;
+  path: string;
+  [key: string]: any;
+}
+```
+
+ProLayout 会根据 `location.pathname` 来自动选中菜单，并且自动生成相应的面包屑。如果不想使用可以自己配置 `selectedKeys` 和 `openKeys` 来进行受控配置。
+
+## Demo
+
+<code src="./demo/base.tsx" />

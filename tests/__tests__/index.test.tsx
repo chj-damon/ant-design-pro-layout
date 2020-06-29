@@ -14,14 +14,16 @@ describe('BasicLayout', () => {
       })),
     });
   });
-  it('🥩 base use', () => {
+
+  it('🥩 base use', async () => {
     const html = render(<BasicLayout />);
     expect(html).toMatchSnapshot();
   });
 
-  it('🥩 support loading', () => {
-    const html = render(<BasicLayout loading />);
-    expect(html).toMatchSnapshot();
+  it('🥩 support loading', async () => {
+    const wrapper = mount(<BasicLayout loading />);
+    await waitForComponentToPaint(wrapper);
+    expect(wrapper.render()).toMatchSnapshot();
   });
 
   it('🥩 do not render menu', async () => {
@@ -35,22 +37,23 @@ describe('BasicLayout', () => {
         {}
       ).padding,
     ).toBe(undefined);
+    wrapper.unmount();
   });
 
-  it('🥩 support menuDateRender', () => {
-    const wrapper = render(
+  it('🥩 support menuDateRender', async () => {
+    const wrapper = mount(
       <BasicLayout
         menuDataRender={() =>
           [
             {
               path: '/home',
               name: '首页',
-              icon: 'smile',
               locale: 'menu.home',
               children: [
                 {
                   path: '/home/overview',
                   name: '概述',
+                  hideInMenu: true,
                   exact: true,
                   locale: 'menu.home.overview',
                 },
@@ -58,6 +61,7 @@ describe('BasicLayout', () => {
                   path: '/home/search',
                   name: '搜索',
                   exact: true,
+                  hideInMenu: true,
                   locale: 'menu.home.search',
                 },
               ],
@@ -65,15 +69,14 @@ describe('BasicLayout', () => {
             {
               path: '/data_hui',
               name: '汇总数据',
-              icon: 'smile',
 
               locale: 'menu.data_hui',
               children: [
                 {
                   collapsed: true,
-                  menuName: '域&middot;买家维度交易',
-                  name: '域&middot;买家维度交易',
-                  icon: 'smile',
+                  menuName: '域买家维度交易',
+                  name: '域买家维度交易',
+
                   children: [
                     {
                       id: 2,
@@ -85,7 +88,6 @@ describe('BasicLayout', () => {
                       name: '_交易_买家_月表',
                       path:
                         '/data_hui?tableName=adm_rk_cr_tb_trd_byr_ms&tableSchema=alifin_odps_birisk',
-                      icon: 'smile',
                     },
                     {
                       id: 3,
@@ -97,15 +99,12 @@ describe('BasicLayout', () => {
                       name: '_航旅交易_买家_日表',
                       path:
                         '/data_hui?tableName=adm_rk_cr_tb_trv_byr_ds&tableSchema=alifin_odps_birisk',
-                      icon: 'smile',
                     },
                   ],
                 },
                 {
                   collapsed: true,
-                  menuName: '域&middot;买家维度交易2',
-                  name: '域&middot;买家维度交易2',
-                  icon: 'smile',
+                  name: '域买家维度交易2',
                   children: [
                     {
                       id: 5,
@@ -117,7 +116,6 @@ describe('BasicLayout', () => {
                       name: '_交易_买家_月表',
                       path:
                         '/data_hui?tableName=adm_rk_cr_tb_trd_byr_ms&tableSchema=alifin_odps_birisk',
-                      icon: 'smile',
                     },
                     {
                       id: 6,
@@ -129,15 +127,12 @@ describe('BasicLayout', () => {
                       name: '_航旅交易_买家_日表',
                       path:
                         '/data_hui?tableName=adm_rk_cr_tb_trv_byr_ds&tableSchema=alifin_odps_birisk',
-                      icon: 'smile',
                     },
                   ],
                 },
                 {
                   collapsed: true,
-                  menuName: '域&middot;买家维度交易2',
-                  name: '域&middot;买家维度交易2',
-                  icon: 'smile',
+                  name: '域买家维度交易3',
                   children: [
                     {
                       id: 7,
@@ -149,7 +144,6 @@ describe('BasicLayout', () => {
                       name: '_交易_买家_月表2',
                       path:
                         '/data_hui?tableName=adm_rk_cr_tb_trd_byr_ms&tableSchema=alifin_odps_birisk',
-                      icon: 'smile',
                     },
                     {
                       id: 8,
@@ -161,7 +155,6 @@ describe('BasicLayout', () => {
                       name: '_航旅交易_买家_日表3',
                       path:
                         '/data_hui?tableName=adm_rk_cr_tb_trv_byr_ds&tableSchema=alifin_odps_birisk',
-                      icon: 'smile',
                     },
                   ],
                 },
@@ -170,14 +163,12 @@ describe('BasicLayout', () => {
             {
               path: '/data_ming',
               name: '明细数据',
-              icon: 'smile',
               locale: 'menu.data_ming',
-              children: [],
             },
             {
               path: '/other',
               name: '其他',
-              icon: 'smile',
+
               locale: 'menu.other',
               children: [
                 {
@@ -207,7 +198,8 @@ describe('BasicLayout', () => {
         }
       />,
     );
-    expect(wrapper).toMatchSnapshot();
+    await waitForComponentToPaint(wrapper);
+    expect(wrapper.render()).toMatchSnapshot();
   });
 
   it('🥩 do not render footer', async () => {
@@ -215,6 +207,7 @@ describe('BasicLayout', () => {
     await waitForComponentToPaint(wrapper);
     const footer = wrapper.find('footer');
     expect(footer.exists()).toBe(false);
+    wrapper.unmount();
   });
 
   it('🥩 use onLogoClick', async () => {
@@ -232,6 +225,7 @@ describe('BasicLayout', () => {
     const logo = wrapper.find('#test_log');
     logo.simulate('click');
     expect(onLogoClick).toHaveBeenCalled();
+    wrapper.unmount();
   });
 
   it('🥩 render logo', async () => {
@@ -239,6 +233,7 @@ describe('BasicLayout', () => {
     await waitForComponentToPaint(wrapper);
     const logo = wrapper.find('#test_log');
     expect(logo.text()).toEqual('Logo');
+    wrapper.unmount();
   });
 
   it('🥩 render logo by function', async () => {
@@ -248,50 +243,56 @@ describe('BasicLayout', () => {
     await waitForComponentToPaint(wrapper);
     const logo = wrapper.find('#test_log');
     expect(logo.text()).toEqual('Logo');
+    wrapper.unmount();
   });
 
   it('🥩 onCollapse', async () => {
     const onCollapse = jest.fn();
-    const wrapper = mount(
-      <BasicLayout collapsed={false} onCollapse={onCollapse} />,
-    );
+    const wrapper = mount(<BasicLayout onCollapse={onCollapse} />);
     await waitForComponentToPaint(wrapper);
-    wrapper.find('.ant-pro-global-header-trigger').simulate('click');
+    wrapper
+      .find('.ant-pro-sider-collapsed-button')
+      .map((item) => item && item.simulate('click'));
     expect(onCollapse).toHaveBeenCalled();
+    wrapper.unmount();
   });
 
   it('🥩 siderWidth default', async () => {
     const wrapper = mount(<BasicLayout />);
     await waitForComponentToPaint(wrapper);
-    expect(wrapper.find('.ant-pro-sider-menu-sider').get(0).props.width).toBe(
-      256,
-    );
+    expect(wrapper.find('.ant-pro-sider').get(1).props.width).toBe(208);
+    wrapper.unmount();
   });
 
   it('🥩 siderWidth=160', async () => {
     const wrapper = mount(<BasicLayout siderWidth={160} />);
     await waitForComponentToPaint(wrapper);
-    expect(wrapper.find('.ant-pro-sider-menu-sider').get(0).props.width).toBe(
-      160,
-    );
+    expect(wrapper.find('.ant-pro-sider').get(1).props.width).toBe(160);
+    wrapper.unmount();
   });
 
   it('🥩 do not render collapsed button', async () => {
     const wrapper = mount(<BasicLayout collapsedButtonRender={false} />);
     await waitForComponentToPaint(wrapper);
-    expect(wrapper.find('.ant-pro-global-header-trigger').exists()).toBe(false);
+    expect(wrapper.find('.ant-pro-sider-collapsed-button').exists()).toBe(
+      false,
+    );
+    wrapper.unmount();
   });
 
   it('🥩 when renderMenu=false, do not render collapsed button', async () => {
     const wrapper = mount(<BasicLayout menuRender={false} />);
     await waitForComponentToPaint(wrapper);
-    expect(wrapper.find('.ant-pro-global-header-trigger').exists()).toBe(false);
+    expect(wrapper.find('.ant-pro-sider-collapsed-button').exists()).toBe(
+      false,
+    );
+    wrapper.unmount();
   });
 
   it('🥩 render customize collapsed button', async () => {
     const wrapper = mount<BasicLayoutProps>(
       <BasicLayout
-        collapsedButtonRender={collapsed => (
+        collapsedButtonRender={(collapsed) => (
           <span id="customize_collapsed_button">{`${collapsed}`}</span>
         )}
       />,
@@ -314,6 +315,7 @@ describe('BasicLayout', () => {
     const dom = wrapper.find('#logo');
 
     expect(dom.exists()).toBe(false);
+    wrapper.unmount();
   });
 
   it('🥩 customize render menu header', async () => {
@@ -336,6 +338,7 @@ describe('BasicLayout', () => {
     expect(dom.find('#customize_menu_header_text').text()).toEqual(
       'customize_menu_header',
     );
+    wrapper.unmount();
   });
 
   it('🥩 contentStyle should change dom', async () => {
@@ -359,22 +362,34 @@ describe('BasicLayout', () => {
       />,
     );
     expect(wrapper.find('div.chenshuai2144').exists()).toBeTruthy();
+    wrapper.unmount();
   });
 
   it('🥩 support links', async () => {
     const wrapper = mount<BasicLayoutProps>(<BasicLayout links={['name']} />);
     await waitForComponentToPaint(wrapper);
-    const dom = wrapper.find('.ant-pro-sider-menu-links');
-
+    const dom = wrapper.find('.ant-pro-sider-link');
     expect(dom.exists()).toBeTruthy();
+    wrapper.unmount();
   });
 
   it('🥩 do no render links', async () => {
     const wrapper = mount<BasicLayoutProps>(<BasicLayout />);
     await waitForComponentToPaint(wrapper);
-    const dom = wrapper.find('.ant-pro-sider-menu-links');
+    const dom = wrapper.find('.ant-pro-sider-link');
 
     expect(dom.exists()).toBeFalsy();
+    wrapper.unmount();
+  });
+
+  it('🥩 pure style', async () => {
+    const wrapper = mount<BasicLayoutProps>(<BasicLayout pure />);
+    await waitForComponentToPaint(wrapper);
+    const menu = wrapper.find('.ant-pro-sider-menu');
+    expect(menu.exists()).toBe(false);
+    const dom = wrapper.find('.ant-pro-sider-link');
+    expect(dom.exists()).toBeFalsy();
+    wrapper.unmount();
   });
 
   it('🥩 set page title render', async () => {
@@ -389,9 +404,32 @@ describe('BasicLayout', () => {
       />,
     );
     await waitForComponentToPaint(wrapper);
-    const dom = wrapper.find('.ant-pro-sider-menu-links');
+    const dom = wrapper.find('.ant-pro-sider-link');
 
     expect(dom.exists()).toBeFalsy();
+    wrapper.unmount();
+  });
+
+  it('🥩 onPageChange', async () => {
+    const onPageChange = jest.fn();
+    const wrapper = mount<BasicLayoutProps>(
+      <BasicLayout
+        onPageChange={onPageChange}
+        location={{
+          pathname: '/',
+        }}
+      />,
+    );
+
+    await waitForComponentToPaint(wrapper);
+    wrapper.setProps({
+      location: {
+        pathname: '/name',
+      },
+    });
+
+    expect(onPageChange).toBeCalled();
+    wrapper.unmount();
   });
 
   it('🥩 fixSider and collapsed should have different style', async () => {
@@ -406,7 +444,7 @@ describe('BasicLayout', () => {
     await waitForComponentToPaint(wrapper);
     dom = wrapper.find('header.ant-pro-fixed-header');
     expect(dom.exists()).toBeTruthy();
-    expect(dom.props()?.style?.width).toBe('calc(100% - 80px)');
+    expect(dom.props()?.style?.width).toBe('calc(100% - 48px)');
 
     wrapper.setProps({
       fixedHeader: true,
@@ -414,7 +452,7 @@ describe('BasicLayout', () => {
     });
 
     dom = wrapper.find('header.ant-pro-fixed-header');
-    expect(dom.props()?.style?.width).toBe('calc(100% - 256px)');
+    expect(dom.props()?.style?.width).toBe('calc(100% - 208px)');
 
     wrapper.setProps({
       fixedHeader: true,
@@ -436,10 +474,23 @@ describe('BasicLayout', () => {
 
     wrapper.setProps({
       fixedHeader: true,
-      layout: 'topmenu',
+      layout: 'top',
     });
 
     dom = wrapper.find('header.ant-pro-fixed-header');
     expect(dom.props()?.style?.width).toBe('100%');
   });
+});
+
+it('🥩 support disableAutoContentMinHeight', async () => {
+  const wrapper = mount<BasicLayoutProps>(
+    <BasicLayout
+      disableAutoContentMinHeight
+      location={{
+        pathname: '/',
+      }}
+    />,
+  );
+  await waitForComponentToPaint(wrapper);
+  expect(wrapper.render()).toMatchSnapshot();
 });

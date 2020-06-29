@@ -1,11 +1,15 @@
 ---
 title: 页脚
 order: 7
+sidemenu: false
+nav:
+  title: 页脚
+  order: 7
 ---
 
 # footer 的各种操作
 
-Pro-Layout 默认不提供页脚，要是和 Pro 官网相同的样式，需要自己引入一下页脚。
+ProLayout 默认不提供页脚，要是和 Pro 官网相同的样式，需要自己引入一下页脚。
 
 ## 自定义页脚
 

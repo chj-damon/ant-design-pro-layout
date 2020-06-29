@@ -1,11 +1,15 @@
 ---
 title: Example 展示
 order: 1
+sidemenu: false
+nav:
+  title: 示例
+  order: 10
 ---
 
 # Example 展示
 
-这里用于展示 Pro-Layout 的各种应用，如果你觉得你的用法能帮助到别人，欢迎 PR。
+这里用于展示 ProLayout 的各种应用，如果你觉得你的用法能帮助到别人，欢迎 PR。
 
 ## 搜索菜单
 

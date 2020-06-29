@@ -2,9 +2,10 @@ import H from 'history';
 import { BreadcrumbProps as AntdBreadcrumbProps } from 'antd/es/breadcrumb';
 import React from 'react';
 import pathToRegexp from 'path-to-regexp';
-import { Settings } from '../defaultSettings';
+import { ProSettings } from '../defaultSettings';
 import { MenuDataItem, MessageDescriptor } from '../typings';
 import { urlToList } from './pathTools';
+import { isBrowser } from './utils';
 
 export interface BreadcrumbProps {
   breadcrumbList?: { title: string; href: string }[];
@@ -14,7 +15,7 @@ export interface BreadcrumbProps {
     | {
         pathname?: string;
       };
-  menu?: Settings['menu'];
+  menu?: ProSettings['menu'];
   breadcrumbMap?: Map<string, MenuDataItem>;
   formatMessage?: (message: MessageDescriptor) => string;
   breadcrumbRender?: (
@@ -59,7 +60,7 @@ export const getBreadcrumb = (
   if (!breadcrumbItem) {
     // Find the first matching path in the order defined by route config
     // 按照 route config 定义的顺序找到第一个匹配的路径
-    const targetPath = [...breadcrumbMap.keys()].find(path =>
+    const targetPath = [...breadcrumbMap.keys()].find((path) =>
       // remove ? ,不然会重复
       pathToRegexp(path.replace('?', '')).test(url),
     );
@@ -90,14 +91,18 @@ const conversionFromProps = (
 ): AntdBreadcrumbProps['routes'] => {
   const { breadcrumbList = [] } = props;
   return breadcrumbList
-    .map(item => {
+    .map((item) => {
       const { title, href } = item;
+      // For application that has configured router base
+      // @ts-ignore
+      const { routerBase = '/' } = isBrowser() ? window : {};
+      const realPath = routerBase === '/' ? href : `${routerBase}${href}`;
       return {
-        path: href,
+        path: realPath,
         breadcrumbName: title,
       };
     })
-    .filter(item => item.path);
+    .filter((item) => item.path);
 };
 
 const conversionFromLocation = (
@@ -112,7 +117,11 @@ const conversionFromLocation = (
   const pathSnippets = urlToList(routerLocation.pathname);
   // Loop data mosaic routing
   const extraBreadcrumbItems: AntdBreadcrumbProps['routes'] = pathSnippets
-    .map(url => {
+    .map((url) => {
+      // For application that has configured router base
+      // @ts-ignore
+      const { routerBase = '/' } = isBrowser() ? window : {};
+      const realPath = routerBase === '/' ? url : `${routerBase}${url}`;
       const currentBreadcrumb = getBreadcrumb(breadcrumbMap, url);
       if (currentBreadcrumb.inherited) {
         return { path: '', breadcrumbName: '' };
@@ -121,13 +130,13 @@ const conversionFromLocation = (
       const { hideInBreadcrumb } = currentBreadcrumb;
       return name && !hideInBreadcrumb
         ? {
-            path: url,
+            path: realPath,
             breadcrumbName: name,
             component: currentBreadcrumb.component,
           }
         : { path: '', breadcrumbName: '' };
     })
-    .filter(item => item && item.path);
+    .filter((item) => item && item.path);
 
   return extraBreadcrumbItems;
 };
