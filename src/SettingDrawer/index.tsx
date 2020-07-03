@@ -181,7 +181,7 @@ const updateTheme = (
   localStorage.setItem('site-theme', dark ? 'dark' : 'light');
 };
 
-const getThemeList = () => {
+const getThemeList = (settings: Partial<ProSettings>) => {
   const formatMessage = getFormatMessage();
   const list: {
     key: string;
@@ -197,15 +197,6 @@ const getThemeList = () => {
       url:
         'https://gw.alipayobjects.com/zos/antfincdn/NQ%24zoisaD2/jpRkZQMyYRryryPNtyIC.svg',
       title: formatMessage({ id: 'app.setting.pagestyle.light' }),
-    },
-    {
-      key: 'dark',
-      url:
-        'https://gw.alipayobjects.com/zos/antfincdn/XwFOFbLkSM/LCkqqYNmvBEbokSDscrm.svg',
-      title: formatMessage({
-        id: 'app.setting.pagestyle.dark',
-        defaultMessage: '',
-      }),
     },
   ];
 
@@ -232,6 +223,17 @@ const getThemeList = () => {
       theme: 'dark',
     },
   ];
+  if (settings.layout !== 'mix') {
+    themeList.push({
+      key: 'dark',
+      url:
+        'https://gw.alipayobjects.com/zos/antfincdn/XwFOFbLkSM/LCkqqYNmvBEbokSDscrm.svg',
+      title: formatMessage({
+        id: 'app.setting.pagestyle.dark',
+        defaultMessage: '',
+      }),
+    });
+  }
 
   if (list.find((item) => item.theme === 'dark')) {
     themeList.push({
@@ -244,6 +246,7 @@ const getThemeList = () => {
       }),
     });
   }
+
   // insert  theme color List
   list.forEach((item) => {
     const color = (item.modifyVars || {})['@primary-color'];
@@ -333,7 +336,7 @@ const initState = (
   }
 };
 
-const getParamsFromUrl = (settings: MergerSettingsType<ProSettings>) => {
+const getParamsFromUrl = (settings?: MergerSettingsType<ProSettings>) => {
   if (!isBrowser()) {
     return defaultSettings;
   }
@@ -344,7 +347,7 @@ const getParamsFromUrl = (settings: MergerSettingsType<ProSettings>) => {
   }
   return {
     ...defaultSettings,
-    ...settings,
+    ...(settings || {}),
     ...params,
   };
 };
@@ -368,7 +371,7 @@ const genCopySettingJson = (settingState: MergerSettingsType<ProSettings>) =>
  */
 const SettingDrawer: React.FC<SettingDrawerProps> = (props) => {
   const {
-    settings: propsSettings = {},
+    settings: propsSettings = undefined,
     hideLoading = false,
     hideColors,
     hideHintAlert,
@@ -391,6 +394,7 @@ const SettingDrawer: React.FC<SettingDrawerProps> = (props) => {
       onChange: onSettingChange,
     },
   );
+  const preStateRef = useRef(settingState);
 
   const {
     navTheme = 'dark',
@@ -439,7 +443,7 @@ const SettingDrawer: React.FC<SettingDrawerProps> = (props) => {
     value: string | boolean,
     hideMessageLoading?: boolean,
   ) => {
-    const nextState = { ...settingState };
+    const nextState = { ...preStateRef.current };
     nextState[key] = value;
 
     if (key === 'navTheme') {
@@ -464,6 +468,9 @@ const SettingDrawer: React.FC<SettingDrawerProps> = (props) => {
     if (key === 'layout') {
       nextState.contentWidth = value === 'top' ? 'Fixed' : 'Fluid';
     }
+    if (key === 'layout' && value !== 'mix') {
+      nextState.splitMenus = false;
+    }
     if (key === 'layout' && value === 'mix') {
       nextState.navTheme = 'light';
     }
@@ -483,11 +490,12 @@ const SettingDrawer: React.FC<SettingDrawerProps> = (props) => {
       dom.style.filter = dom.dataset.prosettingdrawer || 'none';
       delete dom.dataset.prosettingdrawer;
     }
+    preStateRef.current = nextState;
     setSettingState(nextState);
   };
 
   const formatMessage = getFormatMessage();
-  const themeList = getThemeList();
+  const themeList = getThemeList(settingState);
 
   useEffect(() => {
     /**
